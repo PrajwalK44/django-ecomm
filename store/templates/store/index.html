@@ -1,0 +1,101 @@
+{% extends 'store/layouts/main.html' %}
+
+{% block content %}
+
+    {% include 'store/inc/slider.html' %}
+
+    <style>
+        /* CSS to adjust image size and ensure consistent card height */
+        .category-image {
+            height: 200px; /* Set a fixed height for the image container */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Hide overflow to maintain consistency */
+        }
+        .category-image img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .card {
+            height: 450px; /* Set a fixed height for the card */
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-title {
+            height: 60px; /* Set a fixed height for the product title */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .price-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .quantity-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h3><i class="fa fa-fire"></i>  Trending Products</h3>
+                <div class="row">
+                    {% for item in trending_products %}
+                        <div class="col-md-3 product_data">
+                            <div class="card position-relative">
+                                <div class="position-absolute top-0 start-0">
+                                    <button type="button" class="btn btn-outline-danger btn-sm m-2 addToWishlist" data-product-id="{{ item.id }}">
+                                        <i class="fa fa-heart"></i> 
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <a href="{% url 'productview' item.category.slug item.slug %}">
+                                        <div class="category-image">
+                                            <img src="{{ item.product_image.url }}" alt="Product image" class="img-fluid">
+                                        </div>
+                                        <h4 class="text-center text-dark mt-3 mb-2">{{ item.name }}</h4>
+                                    </a>
+                                    <div class="text-center mb-3">
+                                        <span class="text-decoration-line-through me-2">Rs.{{ item.original_price }}</span>
+                                        <span class="text-primary">Rs.{{ item.selling_price }}</span>
+                                    </div>
+                                    <div class="row justify-content-center mb-3">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                {% csrf_token %}
+                                                <input type="hidden" value="{{ item.id }}" class="prod_id" >
+                                                <button class="input-group-text decrement-btn">-</button>
+                                                <input type="text" name="quantity" class="form-control qty-input text-center" value="1">
+                                                <button class="input-group-text increment-btn">+</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if item.quantity > 0 %}
+                                                <button type="button" class="btn btn-primary btn-sm addToCartBtn">
+                                                    Add to Cart <i class="fa fa-shopping-cart"></i>
+                                                </button>
+                                            {% else %}
+                                                <button type="button" class="btn btn-danger btn-sm disabled">
+                                                    Out of Stock <i class="fa fa-shopping-cart"></i>
+                                                </button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

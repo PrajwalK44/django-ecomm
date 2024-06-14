@@ -1,0 +1,57 @@
+{% extends 'store/layouts/main.html' %}
+    
+{% block content %}
+
+<div class="py-3 bg-primary">
+    <div class="container">
+        <a class="text-white" href="{% url 'home' %}"> Home /</a>
+        <a class="text-white" href="{% url 'collections' %}"> Collections </a>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Collections</h1>
+    <div class="row">
+        {% for item in category %}
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <a href="{% url 'collectionsview' item.slug %}">
+                    <div class="card-body p-0">
+                        <div class="category-image">
+                            <img src="{{ item.image.url }}" alt="Category image" class="img-fluid rounded">
+                        </div>
+                        <div class="category-info p-3 text-center">
+                            <h4 class="text-dark">{{ item.name }}</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    /* Custom CSS for styling */
+    .category-image {
+        overflow: hidden;
+        height: 200px; /* Adjust height as needed */
+    }
+
+    .category-image img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.3s ease;
+    }
+
+    .category-image img:hover {
+        transform: scale(1.1); /* Zoom effect on hover */
+    }
+
+    .category-info {
+        background-color: #f8f9fa; /* Light background color for category info */
+        border-top: 1px solid #dee2e6;
+    }
+</style>
+
+{% endblock content %}

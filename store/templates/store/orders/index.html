@@ -1,0 +1,99 @@
+{% extends 'store/layouts/main.html' %}
+
+{% block content %}
+<style>
+    .table thead {
+        background-color: #343a40;
+        color: white;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .badge {
+        font-size: 0.9em;
+        padding: 0.5em;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .bg-primary {
+        background-color: #007bff !important;
+    }
+
+    .bg-dark {
+        background-color: #343a40 !important;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+</style>
+
+    
+<div class="py-3 bg-primary">
+    <div class="container">
+        <a class="text-white" href="{% url 'home' %}"> Home /</a>
+        <a class="text-white" href="{% url 'myorders' %}"> My Orders </a>
+    </div>
+</div>
+
+<div class="container my-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-lg rounded">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="mb-0">My Orders</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="font-weight: bold;"> Order Date </th>
+                                <th style="font-weight: bold;"> Tracking Number </th>
+                                <th style="font-weight: bold;"> Total Price </th>
+                                <th style="font-weight: bold;"> Status </th>
+                                <th style="font-weight: bold;"> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in orders %}
+                            <tr>
+                                <td> {{ item.created_at|date:"d M Y" }} </td>
+                                <td> {{ item.tracking_no }} </td>
+                                <td> Rs. {{ item.total_price }} </td>
+                                <td> 
+                                    {% if item.status == "Delivered" %}
+                                        <span class="badge bg-success">Delivered</span>
+                                    {% elif item.status == "Pending" %}
+                                        <span class="badge bg-warning">Pending</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">{{ item.status }}</span>
+                                    {% endif %}
+                                </td>
+                                <td> 
+                                    <a class="btn btn-primary btn-sm" href="{% url 'orderview' item.tracking_no %}">View</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if not orders %}
+                        <p class="text-center mb-0">No orders found.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+        
+{% endblock content %}

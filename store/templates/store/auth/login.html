@@ -1,0 +1,52 @@
+{% extends 'store/layouts/main.html' %}
+
+{% block content %}
+
+<style>
+    /* Custom CSS for login page */
+    .card {
+        border-radius: 10px;
+        /* Optional: Add box-shadow or other styling */
+    }
+
+    .form-label {
+        font-weight: bold;
+        /* Optional: Adjust font styles */
+    }
+
+    .btn {
+        border-radius: 8px;
+        /* Optional: Add more styling as needed */
+    }
+
+</style>
+
+<div class="container" style="margin-bottom: 50px;">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-3 shadow">
+                <div class="card-body">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="text-center">
+                            <h4 class="mb-4">Login</h4>
+                        </div>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username:</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100 mt-4">Login</button>
+                        <p class="mt-3 text-center">New User? <a href="{% url 'register' %}" class="btn btn-outline-primary">Register</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

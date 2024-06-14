@@ -1,0 +1,64 @@
+<style>
+    .barbar{
+        padding-left: 20px;
+    }
+    .fa{
+        size: 10vw;
+    }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container barbar">
+        <a class="navbar-brand"  href="{% url 'home' %}"><i class="fa-brands fa-product-hunt"></i> PkCom</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="fa-solid fa-house"></i>    Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'collections' %}active{% endif %}" href="{% url 'collections' %}"><i class="fa-solid fa-list"></i>  Collections</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'cart' %}active{% endif %}" href="{% url 'cart' %}">
+                        <i class="fa fa-cart-shopping"></i> Cart (<span id="cart-count">0</span>)
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'wishlist' %}active{% endif %}" href="{% url 'wishlist' %}"><i class="fa-regular fa-heart"></i>  Wishlist</a>
+                </li>
+            </ul>
+
+            <form class="d-flex flex-grow-1 search-bar" role="search" action="{% url 'searchproduct' %}" method="POST">
+                {% csrf_token %}
+                <input class="form-control me-2" required name="productsearch" type="search" placeholder="Search products" aria-label="Search" id="searchproduct">
+                <button class="btn btn-outline-light" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+
+            <ul class="navbar-nav ms-auto">
+                {% if request.user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" style="margin-left: 10px;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                        <i class="fa-regular fa-user"></i>  {{ request.user }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{% url 'myorders' %}">My Orders  <i class="fa fa-basket-shopping"></i></a></li>
+                        <li><a class="dropdown-item" href="{% url 'update_profile' %}">Profile </i></a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'logoutpage' %}">Logout  <i class="fa-solid fa-right-from-bracket"></i></a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'loginpage' %}" style="margin-left: 10px;">Login <i class="fa-regular fa-id-badge"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register <i class="fa fa-user-plus"></i></a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,63 @@
+{% extends 'store/layouts/main.html' %}
+
+{% block content %}
+
+<div class="py-3 bg-primary">
+    <div class="container">
+        <a class="text-white" href="{% url 'home' %}"> Home /</a>
+        <a class="text-white" href="{% url 'collections' %}"> Collections /</a>
+        <a class="text-white" href="{% url 'collectionsview' category.slug %}"> {{ category.name }} </a>
+    </div>
+</div>
+
+<br>
+
+<div class="container">
+    <h1 class="text-center mb-4">{{ category.name }}</h1>
+    <div class="row">
+        {% for item in products %}
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <a href="{% url 'productview' item.category.slug item.slug %}">
+                    <div class="card-body p-0">
+                        <div class="product-image">
+                            <img src="{{ item.product_image.url }}" alt="Product image" class="img-fluid rounded w-100" />
+                        </div>
+                        <div class="product-info p-3">
+                            <h4 class="text-center text-dark">{{ item.name }}</h4>
+                            <div class="d-flex justify-content-between mt-2">
+                                <span class="text-muted text-decoration-line-through">
+                                    Rs {{ item.original_price | stringformat:'d' }}
+                                </span>
+                                <span class="text-danger">
+                                    Rs {{ item.selling_price | stringformat:'d' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    /* Custom CSS for styling */
+    .product-image {
+        overflow: hidden;
+        height: 250px; /* Adjust height as needed */
+    }
+
+    .product-image img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.3s ease;
+    }
+
+    .product-image img:hover {
+        transform: scale(1.05); /* Zoom effect on hover */
+    }
+</style>
+
+{% endblock content %}
