@@ -1,0 +1,27 @@
+.checkoutform label{
+    font-size: 14px !important;
+    font-weight: 600;
+
+}
+.checkoutform input{
+    font-size: 14px !important;
+    
+
+}
+/* Add this CSS to your main stylesheet or within a <style> tag in your HTML */
+
+.bg-primary {
+    background-color: #007bff !important;
+}
+
+a.text-white:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+h1.text-center {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+}
+
